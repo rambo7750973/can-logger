@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">CAN 报文收集</string>
+    <string name="notif_channel_name">CAN 录制</string>
+    <string name="notif_channel_desc">CANBUS 报文采集前台服务</string>
+    <string name="notif_title">CAN 录制中</string>
+    <string name="btn_start">开始录制</string>
+    <string name="btn_stop">停止</string>
+    <string name="btn_share">导出/分享</string>
+    <string name="btn_usb">复制到U盘</string>
+    <string name="btn_perm">全盘权限</string>
+    <string name="label_transport">通道</string>
+    <string name="label_port">串口</string>
+    <string name="label_baud">波特率</string>
+    <string name="label_filter">ID过滤</string>
+    <string name="hint_filter">如 7DF,0C9,18FEF100（留空=全部）</string>
+    <string name="cb_auto">开机自动录制</string>
+    <string name="cb_csv">同时输出CSV</string>
+    <string name="cb_clear">清空预览</string>
+</resources>

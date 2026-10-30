@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg">#FF101214</color>
+    <color name="panel">#FF1B1F24</color>
+    <color name="fg">#FFE6E6E6</color>
+    <color name="fg_dim">#FF8A929B</color>
+    <color name="ok">#FF3DDC84</color>
+    <color name="warn">#FFFFC107</color>
+    <color name="err">#FFFF5252</color>
+    <color name="accent">#FF0A84FF</color>
+
+    <color name="ic_launcher_background">#FF101214</color>
+</resources>

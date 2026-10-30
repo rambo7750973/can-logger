@@ -1,0 +1,26 @@
+# Gradle
+.gradle/
+build/
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Android Studio
+.idea/
+*.iml
+.DS_Store
+
+# 构建产物
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# 日志样例（保留 samples 目录）
+*.log
+!samples/*.log
+
+# Python
+__pycache__/
+*.pyc

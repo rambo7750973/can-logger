@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <!-- 参数行 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_transport"
+            android:textColor="@color/fg_dim" />
+
+        <Spinner
+            android:id="@+id/spTransport"
+            android:layout_width="110dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="4dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/label_port"
+            android:textColor="@color/fg_dim" />
+
+        <Spinner
+            android:id="@+id/spPort"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/label_baud"
+            android:textColor="@color/fg_dim" />
+
+        <Spinner
+            android:id="@+id/spBaud"
+            android:layout_width="120dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="4dp" />
+    </LinearLayout>
+
+    <!-- 操作按钮 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnStart"
+            style="@style/CarButton"
+            android:layout_width="0dp"
+            android:layout_weight="1.4"
+            android:text="@string/btn_start"
+            android:textColor="@color/ok" />
+
+        <Button
+            android:id="@+id/btnStop"
+            style="@style/CarButton"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:text="@string/btn_stop"
+            android:textColor="@color/err" />
+
+        <Button
+            android:id="@+id/btnShare"
+            style="@style/CarButton"
+            android:layout_width="0dp"
+            android:layout_weight="1.2"
+            android:text="@string/btn_share" />
+
+        <Button
+            android:id="@+id/btnUsb"
+            style="@style/CarButton"
+            android:layout_width="0dp"
+            android:layout_weight="1.2"
+            android:text="@string/btn_usb" />
+
+        <Button
+            android:id="@+id/btnPerm"
+            style="@style/CarButton"
+            android:layout_width="0dp"
+            android:layout_weight="1.1"
+            android:text="@string/btn_perm" />
+    </LinearLayout>
+
+    <!-- 选项行 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/cbAuto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cb_auto"
+            android:textColor="@color/fg" />
+
+        <CheckBox
+            android:id="@+id/cbCsv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/cb_csv"
+            android:textColor="@color/fg" />
+
+        <CheckBox
+            android:id="@+id/cbClear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/cb_clear"
+            android:textColor="@color/fg" />
+
+        <EditText
+            android:id="@+id/etFilter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="@string/hint_filter"
+            android:importantForAutofill="no"
+            android:inputType="textNoSuggestions"
+            android:maxLines="1"
+            android:textColor="@color/fg"
+            android:textColorHint="@color/fg_dim"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <!-- 状态 -->
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/panel"
+        android:fontFamily="monospace"
+        android:padding="6dp"
+        android:textColor="@color/fg"
+        android:textSize="13sp" />
+
+    <!-- 实时预览 -->
+    <ScrollView
+        android:id="@+id/svLog"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="6dp"
+        android:layout_weight="1"
+        android:background="@color/panel"
+        android:padding="4dp">
+
+        <TextView
+            android:id="@+id/tvLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="monospace"
+            android:textColor="@color/fg_dim"
+            android:textSize="12sp" />
+    </ScrollView>
+
+</LinearLayout>
