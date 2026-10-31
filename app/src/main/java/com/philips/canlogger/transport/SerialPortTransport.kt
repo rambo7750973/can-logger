@@ -2,7 +2,8 @@ package com.philips.canlogger.transport
 
 import com.philips.canlogger.util.AppLog
 import java.io.File
-import java.io.RandomAccessFile
+import java.io.FileInputStream
+import java.io.FileOutputStream
 
 /**
  * 板载串口通道（无 root）。
@@ -11,7 +12,7 @@ import java.io.RandomAccessFile
  * 1. 探测 /dev 下的 tty 节点，检查可读写权限；
  * 2. 用 toybox/busybox 的 `stty` 配置线路参数 —— 关键参数是 `min 0 time 5`，
  *    让 read() 每 0.5s 返回一次（返回 0），这样停止/重连不需要能被信号打断的阻塞读；
- * 3. RandomAccessFile 直接读写该设备节点。
+ * 3. 用 FileInputStream/FileOutputStream 直接读写该设备节点（避免 RAF 的 pread/seek 问题）。
  *
  * 无 root 时能否成功，取决于车机 ROM 是否把协议盒串口节点放开为 crw-rw-rw-。
  * 失败时会把每个候选节点的原因写进异常信息，直接展示给用户。
@@ -21,14 +22,15 @@ class SerialPortTransport(
     private val baud: Int
 ) : CanTransport {
 
-    private var raf: RandomAccessFile? = null
+    private var input: FileInputStream? = null
+    private var output: FileOutputStream? = null
     private var path: String = ""
 
     override val name: String
         get() = path.ifEmpty { "未打开" }
 
     override val isOpen: Boolean
-        get() = raf != null
+        get() = input != null
 
     override fun open() {
         val errors = ArrayList<String>()
@@ -48,7 +50,15 @@ class SerialPortTransport(
 
             val cfg = configureLine(p)
             try {
-                raf = RandomAccessFile(f, "rw")
+                val ins = FileInputStream(f)
+                val outs = try {
+                    FileOutputStream(f)
+                } catch (e: Exception) {
+                    try { ins.close() } catch (_: Exception) {}
+                    throw e
+                }
+                input = ins
+                output = outs
                 path = p
                 AppLog.i("串口已打开: $p @$baud 8N1, 线路配置=${cfg ?: "stty 不可用(沿用系统默认)"}")
                 return
@@ -65,9 +75,9 @@ class SerialPortTransport(
     }
 
     override fun read(buf: ByteArray): Int {
-        val f = raf ?: return -1
+        val f = input ?: return -1
         return try {
-            f.read(buf, 0, buf.size)
+            f.read(buf)
         } catch (e: Exception) {
             AppLog.w("串口读取异常: ${e.message}")
             -1
@@ -75,9 +85,10 @@ class SerialPortTransport(
     }
 
     override fun write(bytes: ByteArray): Boolean {
-        val f = raf ?: return false
+        val f = output ?: return false
         return try {
             f.write(bytes)
+            f.flush()
             true
         } catch (e: Exception) {
             AppLog.w("串口写失败: ${e.message}")
@@ -87,10 +98,15 @@ class SerialPortTransport(
 
     override fun close() {
         try {
-            raf?.close()
+            input?.close()
         } catch (_: Exception) {
         }
-        raf = null
+        try {
+            output?.close()
+        } catch (_: Exception) {
+        }
+        input = null
+        output = null
     }
 
     /**
